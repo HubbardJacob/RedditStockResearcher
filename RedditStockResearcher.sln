@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31005.135
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedditStockResearcher", "RedditStockResearcher\RedditStockResearcher.csproj", "{22D11894-8AD1-48BC-8426-41986D35BBF9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{22D11894-8AD1-48BC-8426-41986D35BBF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22D11894-8AD1-48BC-8426-41986D35BBF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22D11894-8AD1-48BC-8426-41986D35BBF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22D11894-8AD1-48BC-8426-41986D35BBF9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0C863A67-07C1-42A3-BC33-BCD0320EF9CA}
+	EndGlobalSection
+EndGlobal
