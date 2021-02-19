@@ -1,8 +1,18 @@
-﻿@{
+﻿@model SearchModel
+@model
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Enter a ticker: </h1>
+
+    <form asp-controller="Home" asp-action="Search" method="post">
+        <input id="tickerinput" placeholder="TSLA" maxlength="6" pattern="[A-Z]+" type="text" name="Ticker"/>
+    </form>
+    
+    <p>@ViewData["Searched"]</p>
+
+
+
 </div>

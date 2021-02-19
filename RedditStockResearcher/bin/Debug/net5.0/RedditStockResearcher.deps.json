@@ -25,6 +25,8 @@
     ".NETCoreApp,Version=v5.0": {
       "RedditStockResearcher/1.0.0": {
         "dependencies": {
+          "Newtonsoft.Json": "12.0.3",
+          "Reddit": "1.5.0",
           "Microsoft.AspNetCore.Antiforgery": "5.0.0.0",
           "Microsoft.AspNetCore.Authentication.Abstractions": "5.0.0.0",
           "Microsoft.AspNetCore.Authentication.Cookies": "5.0.0.0",
@@ -102,7 +104,7 @@
           "Microsoft.AspNetCore.StaticFiles": "5.0.0.0",
           "Microsoft.AspNetCore.WebSockets": "5.0.0.0",
           "Microsoft.AspNetCore.WebUtilities": "5.0.0.0",
-          "Microsoft.CSharp": "5.0.0.0",
+          "Microsoft.CSharp.Reference": "5.0.0.0",
           "Microsoft.Extensions.Caching.Abstractions": "5.0.0.0",
           "Microsoft.Extensions.Caching.Memory": "5.0.0.0",
           "Microsoft.Extensions.Configuration.Abstractions": "5.0.0.0",
@@ -314,6 +316,45 @@
         },
         "compile": {
           "RedditStockResearcher.dll": {}
+        }
+      },
+      "Microsoft.CSharp/4.5.0": {},
+      "Newtonsoft.Json/12.0.3": {
+        "runtime": {
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {
+            "assemblyVersion": "12.0.0.0",
+            "fileVersion": "12.0.3.23909"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {}
+        }
+      },
+      "Reddit/1.5.0": {
+        "dependencies": {
+          "Microsoft.CSharp": "4.5.0",
+          "Newtonsoft.Json": "12.0.3",
+          "RestSharp": "106.6.9"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Reddit.NET.dll": {
+            "assemblyVersion": "1.5.0.0",
+            "fileVersion": "1.5.0.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/Reddit.NET.dll": {}
+        }
+      },
+      "RestSharp/106.6.9": {
+        "runtime": {
+          "lib/netstandard2.0/RestSharp.dll": {
+            "assemblyVersion": "106.6.9.0",
+            "fileVersion": "106.6.9.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/RestSharp.dll": {}
         }
       },
       "Microsoft.AspNetCore.Antiforgery/5.0.0.0": {
@@ -778,7 +819,7 @@
         },
         "compileOnly": true
       },
-      "Microsoft.CSharp/5.0.0.0": {
+      "Microsoft.CSharp.Reference/5.0.0.0": {
         "compile": {
           "Microsoft.CSharp.dll": {}
         },
@@ -2022,6 +2063,34 @@
       "serviceable": false,
       "sha512": ""
     },
+    "Microsoft.CSharp/4.5.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-EGoBmf3Na2ppbhPePDE9PlX81r1HuOZH5twBrq7couJZiPTjUnD3648balerQJO6EJ8Sj+43+XuRwQ7r+3tE3w==",
+      "path": "microsoft.csharp/4.5.0",
+      "hashPath": "microsoft.csharp.4.5.0.nupkg.sha512"
+    },
+    "Newtonsoft.Json/12.0.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-6mgjfnRB4jKMlzHSl+VD+oUc1IebOZabkbyWj2RiTgWwYPPuaK1H97G1sHqGwPlS5npiF5Q0OrxN1wni2n5QWg==",
+      "path": "newtonsoft.json/12.0.3",
+      "hashPath": "newtonsoft.json.12.0.3.nupkg.sha512"
+    },
+    "Reddit/1.5.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-/Z5vx6As9AIuiorpPsF7TXdnofoiTlNeDNdUCZAVTpyW6o1ff/4l5PhyOMw397CmkF+jg6ixlGvw8ZYZ2b7C3w==",
+      "path": "reddit/1.5.0",
+      "hashPath": "reddit.1.5.0.nupkg.sha512"
+    },
+    "RestSharp/106.6.9": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-/IAQTwlnlQcjlIyvelf+rhQcCRPy/r/0MftpNbff/D7PZVnmVXE4AnHk/F4NJJJEZbI4M+QTglB+xFkAyzr+9A==",
+      "path": "restsharp/106.6.9",
+      "hashPath": "restsharp.106.6.9.nupkg.sha512"
+    },
     "Microsoft.AspNetCore.Antiforgery/5.0.0.0": {
       "type": "referenceassembly",
       "serviceable": false,
@@ -2407,7 +2476,7 @@
       "serviceable": false,
       "sha512": ""
     },
-    "Microsoft.CSharp/5.0.0.0": {
+    "Microsoft.CSharp.Reference/5.0.0.0": {
       "type": "referenceassembly",
       "serviceable": false,
       "sha512": ""

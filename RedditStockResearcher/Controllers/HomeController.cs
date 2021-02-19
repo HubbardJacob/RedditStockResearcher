@@ -28,6 +28,14 @@ namespace RedditStockResearcher.Controllers
             return View();
         }
 
+        [HttpPost]
+        public IActionResult Search(SearchModel searchModel)
+        {
+            ViewData["Searched"] = searchModel.Ticker;
+            return View("Index");
+        }
+
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

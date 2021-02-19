@@ -38,3 +38,7 @@ C:\Users\Jacob\source\repos\RedditStockResearcher\RedditStockResearcher\obj\Debu
 C:\Users\Jacob\source\repos\RedditStockResearcher\RedditStockResearcher\obj\Debug\net5.0\RedditStockResearcher.pdb
 C:\Users\Jacob\source\repos\RedditStockResearcher\RedditStockResearcher\obj\Debug\net5.0\RedditStockResearcher.genruntimeconfig.cache
 C:\Users\Jacob\source\repos\RedditStockResearcher\RedditStockResearcher\obj\Debug\net5.0\RedditStockResearcher.csproj.CopyComplete
+C:\Users\Jacob\source\repos\RedditStockResearcher\RedditStockResearcher\bin\Debug\net5.0\Newtonsoft.Json.dll
+C:\Users\Jacob\source\repos\RedditStockResearcher\RedditStockResearcher\bin\Debug\net5.0\Reddit.NET.dll
+C:\Users\Jacob\source\repos\RedditStockResearcher\RedditStockResearcher\bin\Debug\net5.0\RestSharp.dll
+C:\Users\Jacob\source\repos\RedditStockResearcher\RedditStockResearcher\obj\Debug\net5.0\Razor\Views\Donate\Index.cshtml.g.cs
