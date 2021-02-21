@@ -1,17 +1,48 @@
 ﻿@model SearchModel
-@model
 @{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Enter a ticker: </h1>
+    <h1 class="display-4">Enter a Ticker: </h1>
 
     <form asp-controller="Home" asp-action="Search" method="post">
-        <input id="tickerinput" placeholder="TSLA" maxlength="6" pattern="[A-Z]+" type="text" name="Ticker"/>
+        <input id="tickerinput" placeholder=@(ViewData["Searched"] != null ? ViewData["Searched"] : "TSLA") maxlength="6" pattern="[A-Z]+" type="text" name="Ticker" />
+        <button name="searchexec">Search</button>
     </form>
-    
+
     <p>@ViewData["Searched"]</p>
+
+    @if (ViewData["SubredditSearch"] != null)
+    {
+        var subcount = 0;
+        <div class="accordion" id="stockAccordion">
+            @foreach (var item in (Dictionary<string, List<Reddit.Controllers.Post>>)ViewData["SubredditSearch"])
+            {
+            <div class="card">
+                <div class="card-header" id="heading@(subcount)">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link" type="button" aria-expanded="false" data-toggle="collapse" data-target="#collapse@(subcount)" aria-expanded="true" aria-controls="collapse@(subcount)">
+                            <h3 class="text-center">@item.Key</h3>
+                            
+                        </button>
+                    </h5>
+                    <div id="collapse@(subcount)" class="collapse" aria-labelledby="heading@(subcount)" data-parent="#stockAccordion">
+                        @foreach (Reddit.Controllers.Post post in item.Value)
+                        {
+                            <div class="card-body">
+                                <h5 class="text-center">@post.Listing.Title</h5>
+                                @Html.Raw(post.Listing.SelfTextHTML)
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+                subcount++;
+            }
+        </div>
+            
+     }
 
 
 
