@@ -1,13 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "bdaFhUIqroEdrpVe89cumW4aLkL6kdCcAfp9KmwgvkJmBxkA5Pgx+ApfW59pU5jtbeJAA5QieBxiKWLPMEvLjg==",
+  "dgSpecHash": "oAOlP85KXtXWp0h5xopDukqvNtzX4+wHxvJNqwTIg5hpN9dxcdGfYnQ0qvc4rxrJu0fqPcF81qaYR3G/r7AH1g==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Jacob\\source\\repos\\RedditStockResearcher\\RedditStockResearcher\\RedditStockResearcher.csproj",
+  "projectFilePath": "C:\\Users\\jakeh.DESKTOP-FJORORM\\source\\repos\\RedditStockResearcher\\RedditStockResearcher\\RedditStockResearcher.csproj",
   "expectedPackageFiles": [
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
-    "C:\\Users\\Jacob\\.nuget\\packages\\newtonsoft.json\\12.0.3\\newtonsoft.json.12.0.3.nupkg.sha512",
-    "C:\\Users\\Jacob\\.nuget\\packages\\reddit\\1.5.0\\reddit.1.5.0.nupkg.sha512",
-    "C:\\Users\\Jacob\\.nuget\\packages\\restsharp\\106.6.9\\restsharp.106.6.9.nupkg.sha512"
+    "C:\\Users\\jakeh.DESKTOP-FJORORM\\.nuget\\packages\\newtonsoft.json\\12.0.3\\newtonsoft.json.12.0.3.nupkg.sha512",
+    "C:\\Users\\jakeh.DESKTOP-FJORORM\\.nuget\\packages\\reddit\\1.5.0\\reddit.1.5.0.nupkg.sha512",
+    "C:\\Users\\jakeh.DESKTOP-FJORORM\\.nuget\\packages\\restsharp\\106.6.9\\restsharp.106.6.9.nupkg.sha512"
   ],
   "logs": []
 }

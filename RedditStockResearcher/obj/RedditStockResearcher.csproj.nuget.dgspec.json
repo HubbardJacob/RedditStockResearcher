@@ -1,24 +1,26 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Jacob\\source\\repos\\RedditStockResearcher\\RedditStockResearcher\\RedditStockResearcher.csproj": {}
+    "C:\\Users\\jakeh.DESKTOP-FJORORM\\source\\repos\\RedditStockResearcher\\RedditStockResearcher\\RedditStockResearcher.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Jacob\\source\\repos\\RedditStockResearcher\\RedditStockResearcher\\RedditStockResearcher.csproj": {
+    "C:\\Users\\jakeh.DESKTOP-FJORORM\\source\\repos\\RedditStockResearcher\\RedditStockResearcher\\RedditStockResearcher.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Jacob\\source\\repos\\RedditStockResearcher\\RedditStockResearcher\\RedditStockResearcher.csproj",
+        "projectUniqueName": "C:\\Users\\jakeh.DESKTOP-FJORORM\\source\\repos\\RedditStockResearcher\\RedditStockResearcher\\RedditStockResearcher.csproj",
         "projectName": "RedditStockResearcher",
-        "projectPath": "C:\\Users\\Jacob\\source\\repos\\RedditStockResearcher\\RedditStockResearcher\\RedditStockResearcher.csproj",
-        "packagesPath": "C:\\Users\\Jacob\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Jacob\\source\\repos\\RedditStockResearcher\\RedditStockResearcher\\obj\\",
+        "projectPath": "C:\\Users\\jakeh.DESKTOP-FJORORM\\source\\repos\\RedditStockResearcher\\RedditStockResearcher\\RedditStockResearcher.csproj",
+        "packagesPath": "C:\\Users\\jakeh.DESKTOP-FJORORM\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\jakeh.DESKTOP-FJORORM\\source\\repos\\RedditStockResearcher\\RedditStockResearcher\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
+          "C:\\Microsoft\\Xamarin\\NuGet\\",
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\Jacob\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\jakeh.DESKTOP-FJORORM\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
