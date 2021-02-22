@@ -18,13 +18,18 @@ namespace RedditStockResearcher.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        // These are the tokens needed to access reddit's api
-        private string redditRefreshToken = "302160206818-2nuSIHKfKi_gLq8ROMLmlEhEDNANvg";
-        private string redditAppSecret = "4aK6wVma-xoeUGhtv9Ph9JsMgCY_hw";
-        private string redditAppID = "MEKMHaarViZPQw";
-        private List<string> subreddits = new List<string> { "trakstocks", "pennystocks" };
-
-        //private Subreddit subreddits = new Subreddit() { Name = "trakstocks" };
+        SearchModel SearchData = new SearchModel
+        {
+            // List of reddits to search
+            Subreddits = new List<string> { "trakstocks", "pennystocks", "wallstreetbets", "investing", "stocks" },
+            PostDict = new Dictionary<string, List<Post>>(),
+            // Create reddit account using appid, secret, and refreshtoken for my app.
+            Reddit = new RedditClient(appId: "MEKMHaarViZPQw",
+                                       appSecret: "4aK6wVma-xoeUGhtv9Ph9JsMgCY_hw",
+                                       refreshToken: "302160206818-2nuSIHKfKi_gLq8ROMLmlEhEDNANvg"),
+            SubredditImages = new Dictionary<string, string>(),
+            SubredditColors = new Dictionary<string, string>()
+        };
 
 
         public HomeController(ILogger<HomeController> logger)
@@ -42,26 +47,50 @@ namespace RedditStockResearcher.Controllers
             return View();
         }
 
+        
         [HttpPost]
-        public IActionResult Search(SearchModel searchModel)
+        [ValidateAntiForgeryToken]
+        public IActionResult Search(string ticker)
         {
 
-            RedditClient reddit = new RedditClient(appId: redditAppID, appSecret: redditAppSecret, refreshToken: redditRefreshToken);
-            string ticker = searchModel.Ticker;
+            SearchData.Ticker = ticker;
             ViewData["Searched"] = ticker;
 
-            Dictionary<string, List<Post>> postDict = new Dictionary<string, List<Post>>();
-            foreach (string sub in subreddits)
+            //Dictionary<string, List<Post>> postDict = new Dictionary<string, List<Post>>();
+            foreach (string sub in SearchData.Subreddits)
             {
-                SearchGetSearchInput searchQuery = new SearchGetSearchInput(ticker);
+                // Get current subreddit from api
+                Subreddit currentSubreddit = SearchData.Reddit.Subreddit(name: sub);
 
-                List<Post> subPosts = reddit.Subreddit(name: sub).Search(searchQuery);
-                postDict.Add(sub, subPosts);
+                SearchGetSearchInput searchQuery = new SearchGetSearchInput(ticker);
+                List<Post> subPosts = currentSubreddit.Search(searchQuery);
+                SearchData.PostDict.Add(sub, subPosts);
+
+
+                Subreddit currentSubredditInfo = currentSubreddit.About();
+
+                string dirtyBackgroundImgUrl = currentSubredditInfo.CommunityIcon;
+                string backgroundImgUrl = "";
+                if (dirtyBackgroundImgUrl.Contains(".png"))
+                {
+                    backgroundImgUrl = dirtyBackgroundImgUrl.Substring(0, dirtyBackgroundImgUrl.LastIndexOf(".png") + 4);
+                }
+                else
+                {
+                    backgroundImgUrl = dirtyBackgroundImgUrl.Substring(0, dirtyBackgroundImgUrl.LastIndexOf(".jpg") + 4);
+                }
+                
+                // Add to the subreddit images
+                SearchData.SubredditImages.Add(sub, backgroundImgUrl);
+                SearchData.SubredditColors.Add(sub, currentSubredditInfo.PrimaryColor);
+
+                
                 
             }
 
-            ViewData["SubredditSearch"] = postDict;
-
+            ViewData["SubredditPosts"] = SearchData.PostDict;
+            ViewData["SubredditImages"] = SearchData.SubredditImages;
+            ViewData["SubredditColors"] = SearchData.SubredditColors;
 
 
             return View("Index");
