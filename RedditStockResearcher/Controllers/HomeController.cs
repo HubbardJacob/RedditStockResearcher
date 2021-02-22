@@ -21,7 +21,8 @@ namespace RedditStockResearcher.Controllers
         SearchModel SearchData = new SearchModel
         {
             // List of reddits to search
-            Subreddits = new List<string> { "trakstocks", "pennystocks", "wallstreetbets", "investing", "stocks" },
+            Subreddits = new List<string> { "trakstocks", "pennystocks", "wallstreetbets", 
+                                            "investing", "stocks", "thesims"},
             PostDict = new Dictionary<string, List<Post>>(),
             // Create reddit account using appid, secret, and refreshtoken for my app.
             Reddit = new RedditClient(appId: "MEKMHaarViZPQw",

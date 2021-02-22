@@ -5,13 +5,18 @@
 
 <div class="text-center">
     <h1 class="display-4">Enter a Ticker: </h1>
-
-    <form asp-controller="Home" asp-action="Search" method="post">
-        <input id="tickerinput" placeholder=@(ViewData["Searched"] != null ? ViewData["Searched"] : "TSLA")
-               maxlength="6" pattern="[A-Z]+" type="text" name="Ticker" />
-        <button name="searchexec">Search</button>
-    </form>
-
+    
+    
+        <form asp-controller="Home" asp-action="Search" method="post">
+            <div class="row">
+                <div class="form-group d-flex justify-content-center col-md-8 mx-auto">
+                    <input class="form-control w-25" placeholder=@(ViewData["Searched"] != null ? ViewData["Searched"] : "TSLA")
+                           maxlength="6" pattern="[A-Z]+" type="text" name="Ticker" />
+                    <button type="submit" class="btn btn-dark button-round ml-1" >Search</button>
+                </div>
+            </div>
+        </form>
+    
     <p>@ViewData["Searched"]</p>
 
     @if (ViewData["SubredditPosts"] != null)
@@ -24,24 +29,24 @@
             @foreach (var item in (Dictionary<string, List<Reddit.Controllers.Post>>)ViewData["SubredditPosts"])
             {
                 <div class="card mb-3">
-                    <div class="card-header" id="heading@(subcount)">
+                    <div class="card-header" id="heading@(subcount)" >
                         <h5 class="mb-0 btn-group d-flex" style="background-color: @subredditColors[item.Key]">
-                            <button class="btn btn-link" type="button" aria-expanded="false" data-toggle="collapse" 
+                            <button class="btn btn-link w-100 p-3" type="button" aria-expanded="false" data-toggle="collapse"
                                     data-target="#collapse@(subcount)" aria-controls="collapse@(subcount)" style="text-decoration: none">
 
                                 <h3 class="text-center" style="color: white">
-                                    <img src="@Url.Content(subredditImages[item.Key])" width="32" height="32"/>
-                                    @item.Key
-                                    <img src="@Url.Content(subredditImages[item.Key])" width="32" height="32"/>
+                                    <img src="@Url.Content(subredditImages[item.Key])" width="32" height="32" />
+                                    @("r/"+ @item.Key) 
+                                    <img src="@Url.Content(subredditImages[item.Key])" width="32" height="32" />
                                 </h3>
-                               
+
                             </button>
                         </h5>
                         <div id="collapse@(subcount)" class="collapse" aria-labelledby="heading@(subcount)" data-parent="#stockAccordion">
                             @foreach (Reddit.Controllers.Post post in item.Value)
                             {
                                 <div class="card-body">
-                                    <h5 class="text-center">@post.Listing.Title</h5>
+                                    <h5 class="text-center p-3 mb-2 bg-dark text-white">@post.Listing.Title</h5>
                                     @Html.Raw(post.Listing.SelfTextHTML)
                                 </div>
                             }
@@ -49,8 +54,8 @@
                     </div>
                 </div>
                 subcount++;
-        }
-    </div>
+            }
+        </div>
 
     }
 
