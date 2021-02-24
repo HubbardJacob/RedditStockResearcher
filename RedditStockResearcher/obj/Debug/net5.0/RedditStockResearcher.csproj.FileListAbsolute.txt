@@ -86,3 +86,4 @@ C:\Users\jakeh.DESKTOP-FJORORM\Source\Repos\RedditStockResearcher\RedditStockRes
 C:\Users\jakeh.DESKTOP-FJORORM\Source\Repos\RedditStockResearcher\RedditStockResearcher\obj\Debug\net5.0\ref\RedditStockResearcher.dll
 C:\Users\jakeh.DESKTOP-FJORORM\Source\Repos\RedditStockResearcher\RedditStockResearcher\obj\Debug\net5.0\RedditStockResearcher.pdb
 C:\Users\jakeh.DESKTOP-FJORORM\Source\Repos\RedditStockResearcher\RedditStockResearcher\obj\Debug\net5.0\RedditStockResearcher.genruntimeconfig.cache
+C:\Users\Jacob\source\repos\RedditStockResearcher\RedditStockResearcher\obj\Debug\net5.0\Razor\Views\Home\Search.cshtml.g.cs
