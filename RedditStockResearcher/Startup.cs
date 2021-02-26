@@ -56,7 +56,10 @@ namespace RedditStockResearcher
 
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Search}/{ticker}");
+                    pattern: "{controller=Search}/{action=Index}/{ticker}");
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Search}/{action=AddSubreddit}/{addSub}/{ticker}");
 
                 endpoints.MapControllerRoute(
                     name: "default",

@@ -1,0 +1,115 @@
+﻿@model SearchModel
+@{
+    ViewData["Title"] = "Search";
+}
+
+
+<div class="text-center">
+    <h1 class="display-4">Enter a Ticker: </h1>
+
+
+    
+    <form asp-controller="Search" asp-action="Index" method="get">
+        <div class="row">
+            <div class="form-group d-flex justify-content-center col-md-8 mx-auto">
+                <input id="searchInput" class="form-control w-25" placeholder=@(Model.Ticker.Name != null ? Model.Ticker.Name : "TSLA")
+                       maxlength="6" pattern="[a-zA-Z]+" type="text" name="ticker" />
+                <button type="submit" class="btn btn-dark button-round ml-1">Search</button>
+            </div>
+        </div>
+    </form>
+
+    @*Check if ticker is not invalid (this can only happen if submitted through url)*@
+    @if (!Model.Ticker.Valid)
+    {
+        <div class="alert alert-danger" role="alert">
+            Please enter a valid ticker :)
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            <div class="form-group d-flex justify-content-center col-md-8 mx-auto">
+                <h3 id="tickerHeader" class="h3">@Model.Ticker.Name</h3>
+            </div>
+        </div>
+        <div class="row">
+            <a class="btn ml-4 p-1" data-toggle="collapse" href="#filterCollapse"
+               role="button" aria-expanded="false" aria-controls="collapseExample">
+                <img class="img-fluid" alt="filter" src="~/images/filter_alt-24px.svg" />
+            </a>
+            <div class="collapse" id="filterCollapse">
+                <div class="card card-body bg-dark p-4">
+                    @*<form asp-controller="Search" asp-action="Index" method="get">*@
+                        <input id="addSubInput" class="form-control" placeholder=@(ViewData["SubAdded"] != null ? ViewData["SubAdded"] : "wallstreetbets")
+                               pattern="[a-zA-Z]+" type="text" name="subToAdd" />
+                        <button type="submit" class="btn btn-outline-dark ml-1 text-white">Add Sub</button>
+                    @*</form>*@
+                </div>
+            </div>
+        </div>
+
+
+
+        <div id="filterDiv">
+
+             @*Start displaying posts*@
+            @if (Model.PostDict != null)
+            {
+                var subcount = 0;
+                <div class="accordion" id="stockAccordion">
+                    @foreach (var item in Model.PostDict)
+                    {
+                        <div class="card mb-3">
+                            <div class="card-header" id="heading@(subcount)">
+                                <h5 class="mb-0 btn-group d-flex" style="background-color: @Model.SubredditColors[item.Key]">
+                                    <button class="btn btn-link w-100 p-3" type="button" aria-expanded="false" data-toggle="collapse"
+                                            data-target="#collapse@(subcount)" aria-controls="collapse@(subcount)" style="text-decoration: none">
+
+                                        <h3 class="text-center" style="color: white">
+                                            <img src="@Url.Content(Model.SubredditImages[item.Key])" width="32" height="32" />
+                                            @("r/"+ @item.Key)
+                                            <img src="@Url.Content(Model.SubredditImages[item.Key])" width="32" height="32" />
+                                        </h3>
+
+                                    </button>
+                                </h5>
+                                <div id="collapse@(subcount)" class="collapse" aria-labelledby="heading@(subcount)" data-parent="#stockAccordion">
+                                    @foreach (Reddit.Controllers.Post post in item.Value)
+                                    {
+                                        <div class="card-body">
+
+                                            <div class="d-flex justify-content-between p-3 mb-2 bg-dark">
+                                                <div class="p-2 invisible ">
+                                                    <p class="text-right">random text to push</p>
+                                                    <p class="text-right font-italic text-muted">random text to push</p>
+                                                </div>
+                                                <div class="p-2 align-self-center flex-fill">
+                                                    <h5 class="text-white justify-content-center text-center">
+                                                        @post.Listing.Title
+                                                    </h5>
+                                                </div>
+
+                                                <div class="p-2 ml-auto align-self-center">
+                                                    <p class="text-right" style="color: lightgray">@Model.PostsTimePassedStrings[post].Item2</p>
+                                                    <p class="text-right font-italic text-muted">@Model.PostsTimePassedStrings[post].Item1</p>
+                                                </div>
+                                            </div>
+
+                                            @Html.Raw(post.Listing.SelfTextHTML)
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        subcount++;
+                    }
+                </div>
+
+            }
+        </div>
+    }
+
+
+
+</div>

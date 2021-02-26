@@ -73,3 +73,8 @@ body {
 
 /* MY OWN CSS*/
 
+btn:focus, a:focus {
+    outline: none;
+    border: none;
+}
+

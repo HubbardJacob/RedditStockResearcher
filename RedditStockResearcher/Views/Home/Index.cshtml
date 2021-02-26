@@ -5,19 +5,38 @@
 
 <div class="text-center">
     <h1 class="display-4">Enter a Ticker: </h1>
+
+
+    <form asp-controller="Search" asp-action="Index" method="get">
+        <div class="row">
+            <div class="form-group d-flex justify-content-center col-md-8 mx-auto">
+                <input id="searchInput" class="form-control w-25" placeholder=@(ViewData["Ticker"] != null ? ViewData["Ticker"] : "TSLA")
+                       maxlength="6" pattern="[a-zA-Z]+" type="text" name="ticker" />
+                <button type="submit" class="btn btn-dark button-round ml-1">Search</button>
+            </div>
+        </div>
+    </form>
+
+
     
-    
-        <form asp-controller="Home" asp-action="Search" method="get">
-            <div class="row">
-                <div class="form-group d-flex justify-content-center col-md-8 mx-auto">
-                    <input id="searchInput" class="form-control w-25" placeholder=@(ViewData["Searched"] != null ? ViewData["Searched"] : "TSLA")
-                           maxlength="6" pattern="[a-zA-Z]+" type="text" name="ticker"/>
-                    <button type="submit" class="btn btn-dark button-round ml-1" >Search</button>
+
+
+
+    @*<div class="pos-f-t">
+            <div class="collapse" id="navbarToggleExternalContent">
+                <div class="bg-dark p-4">
+                    <h4 class="text-white">Collapsed content</h4>
+                    <span class="text-muted">Toggleable via the navbar brand.</span>
                 </div>
             </div>
-        </form>
-    
-    
+            <nav class="navbar navbar-dark bg-dark">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+
+                </button>
+            </nav>
+        </div>*@
+
+
 
 
 

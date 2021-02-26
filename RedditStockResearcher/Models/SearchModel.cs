@@ -13,7 +13,7 @@ namespace RedditStockResearcher.Models
         public string RedditRefreshToken { get; set; }
         public string RedditAppSecret { get; set; }
         public string RedditAppID { get; set; }
-        public String Ticker { get; set; }
+        public Ticker Ticker { get; set; }
         public Dictionary<string, List<Post>> PostDict { get; set; }
         public List<string> Subreddits { get; set; }
         public RedditClient Reddit { get; set; }
