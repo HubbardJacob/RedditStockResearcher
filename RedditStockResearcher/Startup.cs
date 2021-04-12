@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,6 +24,26 @@ namespace RedditStockResearcher
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDistributedMemoryCache();
+
+            //services.Configure<CookiePolicyOptions>(options =>
+            //{
+            //    // This lambda determines whether user consent for non-essential cookies is needed for a given request.
+            //    options.CheckConsentNeeded = context => false;
+            //    options.MinimumSameSitePolicy = SameSiteMode.None;
+            //});
+
+            //services.AddSession(options => // For cookies
+            //{
+            //    options.Cookie.Name = ".RedditStockResearch.Filters";
+            //    options.IdleTimeout = TimeSpan.FromSeconds(10);
+            //    options.Cookie.IsEssential = true;
+            //});
+
+            //services.ConfigureApplicationCookie(options => // For cookies
+            //{
+            //    options.Cookie.Expiration = new TimeSpan(0, 0, 0, 0, -1);
+            //});
             services.AddControllersWithViews();
         }
 
@@ -46,6 +67,8 @@ namespace RedditStockResearcher
 
             app.UseAuthorization();
 
+            //app.UseSession(); // For cookies
+
             app.UseEndpoints(endpoints =>
             {
                 
@@ -57,9 +80,18 @@ namespace RedditStockResearcher
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Search}/{action=Index}/{ticker}");
+
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Search}/{action=AddSubreddit}/{addSub}/{ticker}");
+
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Search}/{action=RemoveSubreddit}/{remSub}/{ticker}");
+
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Search}/{action=SortSubreddit}/{sortBy}/{ticker}");
 
                 endpoints.MapControllerRoute(
                     name: "default",

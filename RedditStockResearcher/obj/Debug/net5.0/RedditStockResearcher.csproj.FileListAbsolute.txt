@@ -88,3 +88,5 @@ C:\Users\jakeh.DESKTOP-FJORORM\Source\Repos\RedditStockResearcher\RedditStockRes
 C:\Users\jakeh.DESKTOP-FJORORM\Source\Repos\RedditStockResearcher\RedditStockResearcher\obj\Debug\net5.0\RedditStockResearcher.genruntimeconfig.cache
 C:\Users\Jacob\source\repos\RedditStockResearcher\RedditStockResearcher\obj\Debug\net5.0\Razor\Views\Search\Index.cshtml.g.cs
 C:\Users\Jacob\source\repos\RedditStockResearcher\RedditStockResearcher\obj\Debug\net5.0\Razor\Views\Search\_FilterPartial.cshtml.g.cs
+C:\Users\Jacob\source\repos\RedditStockResearcher\RedditStockResearcher\obj\Debug\net5.0\Razor\Views\Home\disclaimer.cshtml.g.cs
+C:\Users\Jacob\source\repos\RedditStockResearcher\RedditStockResearcher\bin\Debug\net5.0\aws-beanstalk-tools-defaults.json

@@ -8,7 +8,7 @@
     <h1 class="display-4">Enter a Ticker: </h1>
 
 
-    
+
     <form asp-controller="Search" asp-action="Index" method="get">
         <div class="row">
             <div class="form-group d-flex justify-content-center col-md-8 mx-auto">
@@ -36,58 +36,95 @@
         <div class="row">
             <a class="btn ml-4 p-1" data-toggle="collapse" href="#filterCollapse"
                role="button" aria-expanded="false" aria-controls="collapseExample">
-                <img class="img-fluid" alt="filter" src="~/images/filter_alt-24px.svg" />
+                <img class="img-fluid" alt="filter" src="~/images/filter_img.png" style="height: 24px; width: 24px;" />
             </a>
-            <div class="collapse" id="filterCollapse">
-                <div class="card card-body bg-dark p-4">
-                    @*<form asp-controller="Search" asp-action="Index" method="get">*@
-                        <input id="addSubInput" class="form-control" placeholder=@(ViewData["SubAdded"] != null ? ViewData["SubAdded"] : "wallstreetbets")
-                               pattern="[a-zA-Z]+" type="text" name="subToAdd" />
-                        <button type="submit" class="btn btn-outline-dark ml-1 text-white">Add Sub</button>
-                    @*</form>*@
+
+        </div>
+        <div class="collapse" id="filterCollapse">
+            <div class="card card-body bg-dark p-4">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <input id="addSubInput" class="form-control" placeholder=@(ViewData["SubAdded"] != null ? ViewData["SubAdded"] : "wallstreetbets")
+                                   pattern="[a-zA-Z]+" type="text" name="subToAdd" />
+                            <button type="submit" class="btn btn-outline-dark ml-1 text-white" id="addSubButton">Add Sub</button>
+                        </div>
+                        <div class="col-lg-6">
+                            <select id="sortSelect" class="browser-default custom-select" aria-label="Sort by select ">
+                                <option value="" selected disabled hidden>Sort by</option>
+                                <option value="relevance">Relevance</option>
+                                <option value="hot">Hot</option>
+                                <option value="top">Top</option>
+                                <option value="new">New</option>
+                                <option value="comments">Comments</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
 
-
         <div id="filterDiv">
 
-             @*Start displaying posts*@
+            @*Start displaying posts*@
             @if (Model.PostDict != null)
             {
-                var subcount = 0;
                 <div class="accordion" id="stockAccordion">
                     @foreach (var item in Model.PostDict)
                     {
-                        <div class="card mb-3">
-                            <div class="card-header" id="heading@(subcount)">
-                                <h5 class="mb-0 btn-group d-flex" style="background-color: @Model.SubredditColors[item.Key]">
-                                    <button class="btn btn-link w-100 p-3" type="button" aria-expanded="false" data-toggle="collapse"
-                                            data-target="#collapse@(subcount)" aria-controls="collapse@(subcount)" style="text-decoration: none">
+                        var subName = (@item.Key);
 
+                        <div class="card mb-3" id="@(subName)Card">
+
+                            <div class="card-header" id="@(subName)Header">
+
+
+                                <div id="@(subName)" class="position-relative mb-0 d-flex" style="background-color: @Model.SubredditColors[item.Key]">
+
+                                    <button class="btn btn-link w-100 p-3" type="button" aria-expanded="false" data-toggle="collapse"
+                                            data-target="#@(subName)Collapse" aria-controls="@(subName)Collapse" style="text-decoration: none">
                                         <h3 class="text-center" style="color: white">
                                             <img src="@Url.Content(Model.SubredditImages[item.Key])" width="32" height="32" />
-                                            @("r/"+ @item.Key)
+                                            @("r/" + @item.Key)
                                             <img src="@Url.Content(Model.SubredditImages[item.Key])" width="32" height="32" />
                                         </h3>
-
                                     </button>
-                                </h5>
-                                <div id="collapse@(subcount)" class="collapse" aria-labelledby="heading@(subcount)" data-parent="#stockAccordion">
+
+                                    <button id="delete@(subName)" class="btn btn-danger btn-sm" style="position: absolute; top:0; right:0; transform: translate(30%, -20%);">
+                                        X
+                                    </button>
+
+
+                                </div>
+
+
+
+
+
+
+                                <div id="@(subName)Collapse" class="collapse" aria-labelledby="@(subName)Header" data-parent="#stockAccordion">
                                     @foreach (Reddit.Controllers.Post post in item.Value)
                                     {
                                         <div class="card-body">
 
                                             <div class="d-flex justify-content-between p-3 mb-2 bg-dark">
-                                                <div class="p-2 invisible ">
-                                                    <p class="text-right">random text to push</p>
-                                                    <p class="text-right font-italic text-muted">random text to push</p>
+                                                <div class="p-2 mr-auto ml-0 pr-lg-4 pl-0 align-self-center">
+                                                    <div class="p-2 pl-0 w-100">
+                                                        <p class="d-inline p-1 pr-md-1 text-white">@post.UpVotes</p>
+                                                        <img class="mb-2 d-inline" src="~/images/upvote-trans.png" alt="upvoteimg" width="24" height="24" />
+                                                    </div>
+                                                    <div class="p-2 pl-0 w-100">
+                                                        <p class="d-inline p-1 pr-md-1 text-white">@post.Listing.NumComments</p>
+                                                        <img src="~/images/commentimg.png" alt="commentimg" width="24" height="24" />
+                                                    </div>
                                                 </div>
-                                                <div class="p-2 align-self-center flex-fill">
-                                                    <h5 class="text-white justify-content-center text-center">
-                                                        @post.Listing.Title
-                                                    </h5>
+                                                <div class="p-2 ml-lg-5 align-self-center">
+                                                    <a href="https://www.reddit.com@(post.Listing.Permalink)">
+                                                        <h5 class="text-white justify-content-center text-center">
+                                                            @post.Listing.Title
+                                                        </h5>
+                                                    </a>
                                                 </div>
 
                                                 <div class="p-2 ml-auto align-self-center">
@@ -97,14 +134,21 @@
                                             </div>
 
                                             @Html.Raw(post.Listing.SelfTextHTML)
+                                            @if (@post.Listing.IsRedditMediaDomain)
+                                            {
+
+                                                <img class="img-fluid w-50 h-50 modal-open" src="@(post.Listing.URL)" alt="post image" />
+                                            }
+
                                         </div>
                                     }
                                 </div>
                             </div>
                         </div>
-                        subcount++;
+
                     }
                 </div>
+
 
             }
         </div>

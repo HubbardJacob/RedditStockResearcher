@@ -12,20 +12,35 @@ using System.Net.Http;
 using Reddit.Inputs.Search;
 using Newtonsoft.Json;
 using System.Text.RegularExpressions;
+using Microsoft.AspNetCore.Http;
 
 namespace RedditStockResearcher.Controllers
 {
     public class SearchController : Controller
     {
+        const string SessionKeySubs = "_Subs";
+        private List<string> BaseSubs = new List<string>()
+        { 
+            "trakstocks",
+            "pennystocks",
+            "wallstreetbets",
+            "investing",
+            "stocks"
+        };
+        private CookieOptions CookieOpts = new CookieOptions 
+        { 
+            Path = "/", 
+            HttpOnly = false, 
+            IsEssential = true, 
+            Expires = DateTime.Now.AddYears(100) 
+        };
+        public int rememberdata;
         
-
+        // Each time the search page is updated (new search, filter, etc.). Create a new model 
         private SearchModel CreateBaseModel()
         {
             SearchModel SearchData = new SearchModel
             {
-                // List of reddits to search
-                Subreddits = new List<string> { "trakstocks", "pennystocks", "wallstreetbets",
-                "investing", "stocks", "amcstock" },
                 PostDict = new Dictionary<string, List<Post>>(),
                 // Create reddit account using appid, secret, and refreshtoken for my app.
                 Reddit = new RedditClient(appId: "MEKMHaarViZPQw",
@@ -38,42 +53,59 @@ namespace RedditStockResearcher.Controllers
                 RGX = new Regex("^[a-zA-Z]{1,6}$")
             };
 
+            //Checking cookie data, if exists, populate model with it
+            string cookieSubs = Request.Cookies[SessionKeySubs];
+
+            // If we have not yet created cookies for the user.
+            if (string.IsNullOrEmpty(cookieSubs))
+            {
+                SearchData.Subreddits = BaseSubs;
+                string baseSubsString = String.Join(",", BaseSubs);
+                Response.Cookies.Append(SessionKeySubs, baseSubsString, CookieOpts);
+            }
+            else
+            {
+                SearchData.Subreddits = cookieSubs.Split(',').ToList<string>();
+            }
+
+
             return SearchData;
         }
         [HttpGet]
         public IActionResult Index(string ticker)
         {
-            
-            SearchModel SearchData = CreateBaseModel();
+            rememberdata = 0;
+            SearchModel.SavedData = CreateBaseModel();
+
             if (ticker == null)
             {
-                SearchData.Ticker.Valid = false;
-                return View(SearchData);
+                SearchModel.SavedData.Ticker.Valid = false;
+                return View(SearchModel.SavedData);
             }
             else
             {
                 ViewData["Ticker"] = ticker;
-                SearchData.Ticker.Name = ticker;
+                SearchModel.SavedData.Ticker.Name = ticker;
             }
 
-            if (SearchData.RGX.IsMatch(ticker))
+            // Check if valid ticker.
+            if (SearchModel.SavedData.RGX.IsMatch(ticker))
             {
-                SearchData.Ticker.Valid = true;
+                SearchModel.SavedData.Ticker.Valid = true;
 
             }
             else
             {
-                SearchData.Ticker.Valid = false;
-                return View(SearchData);
+                SearchModel.SavedData.Ticker.Valid = false;
+                return View(SearchModel.SavedData);
             }
 
 
-            SearchData = SearchAndPopulate(SearchData, ticker);
-
-            return View(SearchData);
+            SearchAndPopulate(SearchModel.SavedData.Subreddits, ticker);
+            return View(SearchModel.SavedData);
         }
 
-        private SearchModel GetPostsTimePassed(SearchModel BaseModel, List<Post> subPosts)
+        private void GetPostsTimePassed(List<Post> subPosts)
         {
             const int SECOND = 1;
             const int MINUTE = 60 * SECOND;
@@ -121,28 +153,33 @@ namespace RedditStockResearcher.Controllers
 
                 //var easternZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
                 var localTime = TimeZoneInfo.ConvertTimeFromUtc(post.Created, TimeZoneInfo.Local);
-                BaseModel.PostsTimePassedStrings.Add(post, new Tuple<string, string>(timeAgo, localTime.ToString("g")));
+                SearchModel.SavedData.PostsTimePassedStrings.Add(post, new Tuple<string, string>(timeAgo, localTime.ToString("g")));
   
             }
-
-            return BaseModel;
 
         }
 
 
-        private SearchModel SearchAndPopulate(SearchModel BaseModel, string ticker)
+        private void SearchAndPopulate(List<string> subreddits, string ticker, bool sorting = false, string sort = "relevance")
         {
-
-            foreach (string sub in BaseModel.Subreddits)
+            // If we are sorting, we have to empty our dictionarys as we getting all new data.
+            if (sorting)
+            {
+                SearchModel.SavedData.PostDict = new Dictionary<string, List<Post>>();
+                SearchModel.SavedData.SubredditImages = new Dictionary<string, string>();
+                SearchModel.SavedData.SubredditColors = new Dictionary<string, string>();
+                SearchModel.SavedData.PostsTimePassedStrings = new Dictionary<Post, Tuple<string, string>>();
+            }
+            foreach (string sub in subreddits)
             {
                 // Get current subreddit from api
-                Subreddit currentSubreddit = BaseModel.Reddit.Subreddit(name: sub);
+                Subreddit currentSubreddit = SearchModel.SavedData.Reddit.Subreddit(name: sub);
 
-                SearchGetSearchInput searchQuery = new SearchGetSearchInput(ticker);
+                SearchGetSearchInput searchQuery = new SearchGetSearchInput(ticker, sort: sort);
                 List<Post> subPosts = currentSubreddit.Search(searchQuery);
-                BaseModel.PostDict.Add(sub, subPosts);
+                SearchModel.SavedData.PostDict.Add(sub, subPosts);
 
-                BaseModel = GetPostsTimePassed(BaseModel, subPosts);
+                GetPostsTimePassed(subPosts);
 
 
                 Subreddit currentSubredditInfo = currentSubreddit.About();
@@ -159,21 +196,60 @@ namespace RedditStockResearcher.Controllers
                 }
 
                 // Add to the subreddit images
-                BaseModel.SubredditImages.Add(sub, backgroundImgUrl);
-                BaseModel.SubredditColors.Add(sub, currentSubredditInfo.PrimaryColor);
+                SearchModel.SavedData.SubredditImages.Add(sub, backgroundImgUrl);
+                SearchModel.SavedData.SubredditColors.Add(sub, currentSubredditInfo.PrimaryColor);
 
 
 
             }
-            return BaseModel;
+            
         }
+
         [HttpGet]
         public IActionResult AddSubreddit(string addSub, string ticker)
         {
-            SearchModel BaseModel = CreateBaseModel();
-            BaseModel.Subreddits.Insert(0, addSub);
-            SearchModel SearchData = SearchAndPopulate(BaseModel, ticker);
-            return PartialView("_FilterPartial", SearchData);
+            if (SearchModel.SavedData.Subreddits.Contains(addSub))
+            {
+                return PartialView("_FilterPartial", SearchModel.SavedData);
+            }
+            // Append new sub to the cookies.
+            string pastSubs = Request.Cookies[SessionKeySubs];
+            Response.Cookies.Append(SessionKeySubs, pastSubs+","+addSub, CookieOpts);
+  
+            SearchModel.SavedData.Subreddits.Add(addSub);
+            List<string> newSubSingleList = new List<string>(); // This is so we can only pass the new subreddit to search
+            newSubSingleList.Add(addSub);
+
+            SearchAndPopulate(newSubSingleList, ticker);
+            return PartialView("_FilterPartial", SearchModel.SavedData);
+        }
+
+
+        [HttpGet]
+        public IActionResult SortSubreddit(string sortBy, string ticker)
+        {
+
+            SearchAndPopulate(SearchModel.SavedData.Subreddits, ticker, sorting: true, sort: sortBy);
+            return PartialView("_FilterPartial", SearchModel.SavedData);
+        }
+
+        [HttpGet]
+        public void RemoveSubreddit(string remSub, string ticker)
+        {
+            // Get past subs
+            string pastSubs = Request.Cookies[SessionKeySubs];
+
+            // Convert to list to remove
+            List<string> pastSubList = pastSubs.Split(',').ToList<string>();
+            pastSubList.Remove(remSub);
+
+            // Save updated sub list to cookies as string
+            string deletedSubString = String.Join(",", pastSubList);
+            Response.Cookies.Append(SessionKeySubs, deletedSubString, CookieOpts);
+
+            SearchModel.SavedData.Subreddits.Remove(remSub);
+
+
         }
 
     }
