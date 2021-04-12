@@ -43,9 +43,9 @@ namespace RedditStockResearcher.Controllers
             {
                 PostDict = new Dictionary<string, List<Post>>(),
                 // Create reddit account using appid, secret, and refreshtoken for my app.
-                Reddit = new RedditClient(appId: "MEKMHaarViZPQw",
-                                       appSecret: "4aK6wVma-xoeUGhtv9Ph9JsMgCY_hw",
-                                       refreshToken: "302160206818-2nuSIHKfKi_gLq8ROMLmlEhEDNANvg"),
+                Reddit = new RedditClient(appId: "*************",
+                                       appSecret: "*************",,
+                                       refreshToken: "*************",),
                 Ticker = new Ticker(),
                 SubredditImages = new Dictionary<string, string>(),
                 SubredditColors = new Dictionary<string, string>(),
